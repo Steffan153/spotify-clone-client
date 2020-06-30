@@ -74,6 +74,9 @@ export const actions = {
       // eslint-disable-next-line no-empty
     } catch (e) {}
 
+    // what next?
+    // ????????
+
     commit(types.LOGOUT);
   },
 };
