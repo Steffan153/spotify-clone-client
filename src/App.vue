@@ -2,11 +2,27 @@
   <div class="outerWrap">
     <div class="App">
       <Sidebar />
-      <router-view></router-view>
+      <div class="main">
+        <Nav />
+        <div class="mainContent">
+          <router-view></router-view>
+        </div>
+      </div>
     </div>
     <div class="musicControls">music controls</div>
   </div>
 </template>
+
+<script>
+import Nav from "./components/Nav.vue";
+import Sidebar from "./components/Sidebar.vue";
+export default {
+  components: {
+    Nav,
+    Sidebar
+  }
+};
+</script>  
 
 <style lang="scss">
 $greyDark: #040404;
@@ -90,19 +106,6 @@ body {
   z-index: 2;
   position: relative;
   border-top: 1px solid $greyDark;
-}
-
-.upperNav {
-  background: rgba(9, 9, 9, 0.78);
-  height: 56px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  color: white;
-  padding: 0.5rem 2rem;
-  position: fixed;
-  top: 0;
-  z-index: 2;
 }
 
 .main {
@@ -198,124 +201,9 @@ body {
   }
 }
 
-.playlistPage {
-  background-color: rgb(214, 214, 214);
-  .mainInner {
-    background-image: -webkit-gradient(
-      linear,
-      left top,
-      left bottom,
-      from(rgba(0, 0, 0, 0.5)),
-      color-stop(40%, #121212)
-    );
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), #121212 40%);
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  .playlistPageInfo {
-    // width: 300px;
-    text-align: center;
-    padding: 1.5rem 0;
-    display: flex;
-    .playlistPageImage {
-      width: 250px;
-      height: 250px;
-      img {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-        -webkit-box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
-        box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
-      }
-    }
-  }
-  .playlistPageSongs {
-    height: 100%;
-    .playlistButtons {
-      display: flex;
-      align-items: center;
-    }
-    .playIcon {
-      @extend .playIcon;
-      transition: all 0.3s ease-in-out;
-      opacity: 1;
-      position: relative;
-      margin-left: 0;
-      height: 56px;
-      width: 56px;
-      right: 0;
-      bottom: 0;
-      svg {
-        height: 26px;
-        width: 26px;
-      }
-
-      &:hover {
-        transform: scale(1.1);
-      }
-    }
-    .icons {
-      .icon {
-        margin-left: 1.5rem;
-      }
-      .iconsHeart {
-        width: 28px;
-        height: 28px;
-        svg {
-          fill: $greyText;
-          transition: all 0.3s ease-in-out;
-        }
-        &:hover svg {
-          fill: #fff;
-        }
-      }
-    }
-  }
-  .playlistPageContent {
-    text-align: left;
-    padding: 1.5rem 2rem;
-    h1 {
-      font-size: 6rem;
-      margin: 0;
-      line-height: 1;
-      font-family: circular-black;
-      letter-spacing: -6px;
-    }
-    .tagline {
-      font-size: 0.9rem;
-      opacity: 0.7;
-      margin-bottom: 0.5rem;
-    }
-    .playlistPageDesc {
-      display: flex;
-      align-items: center;
-      font-size: 0.9rem;
-      p {
-        margin: 0;
-      }
-      span {
-        opacity: 0.7;
-        position: relative;
-        padding-left: 20px;
-        &:before {
-          content: "";
-          width: 4px;
-          height: 4px;
-          background: white;
-          overflow: hidden;
-          border-radius: 50%;
-          position: absolute;
-          margin-left: -10px;
-          top: 9px;
-        }
-      }
-    }
-  }
-}
-
 ul.songList {
   padding: 0;
+  margin-top: 20px;
   li {
     list-style-type: none;
     width: 100%;
@@ -362,13 +250,3 @@ ul.songList {
   }
 }
 </style>
-
-<script>
-import Sidebar from "./components/Sidebar.vue";
-
-export default {
-  components: {
-    Sidebar
-  }
-};
-</script>

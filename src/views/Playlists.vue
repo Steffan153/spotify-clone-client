@@ -23,96 +23,168 @@
       <div class="playlistPageSongs">
         <div class="playlistButtons">
           <span class="playIcon">
-            <PlayIcon />
+            <svg height="16" role="img" width="16" viewBox="0 0 24 24">
+              <polygon points="21.57 12 5.98 3 5.98 21 21.57 12" fill="currentColor" />
+            </svg>
           </span>
           <div class="icons">
             <div class="icon iconsHeart">
-              <HeartIcon />
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path
+                  d="M378.667 21.333c-56.792 0-103.698 52.75-122.667 77.646-18.969-24.896-65.875-77.646-122.667-77.646C59.813 21.333 0 88.927 0 172c0 45.323 17.99 87.562 49.479 116.469a10.54 10.54 0 001.677 2.177l197.313 196.906c2.083 2.073 4.802 3.115 7.531 3.115s5.458-1.042 7.542-3.125L467.417 283.74l2.104-2.042c1.667-1.573 3.313-3.167 5.156-5.208a10.372 10.372 0 001.896-2.542C499.438 245.948 512 209.833 512 172c0-83.073-59.812-150.667-133.333-150.667zm80.156 240.615a9.929 9.929 0 00-.802 1.083c-1 1.146-2.094 2.156-3.177 3.188L255.99 464.927 68.667 277.979a10.706 10.706 0 00-2.479-3.177C37.677 249.906 21.333 212.437 21.333 172c0-71.313 50.24-129.333 112-129.333 61.063 0 113.177 79.646 113.698 80.448 3.938 6.083 14 6.083 17.938 0 .521-.802 52.635-80.448 113.698-80.448 61.76 0 112 58.021 112 129.333 0 33.604-11.313 65.552-31.844 89.948z"
+                />
+              </svg>
             </div>
             <div class="icon iconsDots"></div>
           </div>
         </div>
 
         <ul class="songList">
-          <li>
-            <div class="songIcon">
-              <NoteIcon class="noteI" />
-              <PlayIcon class="playI" />
-            </div>
-            <div class="songDetails">
-              <h3>Held Down</h3>
-              <span>Laura Marling</span>
-            </div>
-            <div class="songTime">
-              <span>4:07</span>
-            </div>
-          </li>
-          <li>
-            <div class="songIcon">
-              <NoteIcon class="noteI" />
-              <PlayIcon class="playI" />
-            </div>
-            <div class="songDetails">
-              <h3>Held Down</h3>
-              <span>Laura Marling</span>
-            </div>
-            <div class="songTime">
-              <span>4:07</span>
-            </div>
-          </li>
-          <li>
-            <div class="songIcon">
-              <NoteIcon class="noteI" />
-              <PlayIcon class="playI" />
-            </div>
-            <div class="songDetails">
-              <h3>Held Down</h3>
-              <span>Laura Marling</span>
-            </div>
-            <div class="songTime">
-              <span>4:07</span>
-            </div>
-          </li>
-          <li>
-            <div class="songIcon">
-              <NoteIcon class="noteI" />
-              <PlayIcon class="playI" />
-            </div>
-            <div class="songDetails">
-              <h3>Held Down</h3>
-              <span>Laura Marling</span>
-            </div>
-            <div class="songTime">
-              <span>4:07</span>
-            </div>
-          </li>
-          <li>
-            <div class="songIcon">
-              <NoteIcon class="noteI" />
-              <PlayIcon class="playI" />
-            </div>
-            <div class="songDetails">
-              <h3>Held Down</h3>
-              <span>Laura Marling</span>
-            </div>
-            <div class="songTime">
-              <span>4:07</span>
-            </div>
-          </li>
-          <li>
-            <div class="songIcon">
-              <NoteIcon class="noteI" />
-              <PlayIcon class="playI" />
-            </div>
-            <div class="songDetails">
-              <h3>Held Down</h3>
-              <span>Laura Marling</span>
-            </div>
-            <div class="songTime">
-              <span>4:07</span>
-            </div>
-          </li>
+          <playlist-item />
+          <playlist-item />
+          <playlist-item />
+          <playlist-item />
+          <playlist-item />
+          <playlist-item />
         </ul>
       </div>
     </div>
   </div>
+</template>
+
+<script>
+import PlaylistItem from "../components/PlaylistItem.vue";
+export default {
+  components: {
+    PlaylistItem
+  },
+  mounted() {
+    console.log(this.$route.params.id);
+  }
+};
+</script>  
+
+<style lang="scss" scoped>
+$greyDark: #040404;
+$greyLight: #131313;
+$greyLighter: #282828;
+$greyText: #b3b3b3;
+$greyNav: #090909;
+$greenMain: #1db954;
+
+.playlistPage {
+  background-color: rgb(214, 214, 214);
+  .mainInner {
+    background-image: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      from(rgba(0, 0, 0, 0.5)),
+      color-stop(40%, #121212)
+    );
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), #121212 40%);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .playlistPageInfo {
+    // width: 300px;
+    text-align: center;
+    padding: 1.5rem 0;
+    display: flex;
+    .playlistPageImage {
+      width: 250px;
+      height: 250px;
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        -webkit-box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+  .playlistPageSongs {
+    height: 100%;
+    .playlistButtons {
+      display: flex;
+      align-items: center;
+    }
+    .playIcon {
+      @extend .playIcon;
+      transition: all 0.3s ease-in-out;
+      opacity: 1;
+      position: relative;
+      margin-left: 0;
+      height: 56px;
+      width: 56px;
+      right: 0;
+      bottom: 0;
+      svg {
+        height: 26px;
+        width: 26px;
+      }
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+    .icons {
+      .icon {
+        margin-left: 1.5rem;
+      }
+      .iconsHeart {
+        width: 28px;
+        height: 28px;
+        svg {
+          fill: $greyText;
+          transition: all 0.3s ease-in-out;
+        }
+        &:hover svg {
+          fill: #fff;
+        }
+      }
+    }
+  }
+  .playlistPageContent {
+    text-align: left;
+    padding: 1.5rem 2rem;
+    h1 {
+      font-size: 6rem;
+      margin: 0;
+      line-height: 1;
+      font-family: circular-black;
+      letter-spacing: -6px;
+    }
+    .tagline {
+      font-size: 0.9rem;
+      opacity: 0.7;
+      margin-bottom: 0.5rem;
+    }
+    .playlistPageDesc {
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+      p {
+        margin: 0;
+      }
+      span {
+        opacity: 0.7;
+        position: relative;
+        padding-left: 20px;
+        &:before {
+          content: "";
+          width: 4px;
+          height: 4px;
+          background: white;
+          overflow: hidden;
+          border-radius: 50%;
+          position: absolute;
+          margin-left: -10px;
+          top: 9px;
+        }
+      }
+    }
+  }
+}
+</style>
