@@ -2,7 +2,7 @@
   <div class="mainInner" ref="mainInnerRef">
     <div class="cardsWrap" v-for="category in categories" :key="category.id">
       <h2>{{ category.name }}</h2>
-      <!-- <span class="seeAll">SEE ALL</span> -->
+      <span class="seeAll">SEE ALL</span>
       <p class="subText">{{ category.tagline }}</p>
       <playlist-section :category_id="category.id" :limiter="limiter" />
     </div>
@@ -40,28 +40,26 @@ export default {
         },
         {
           id: 4,
-          name: "Kick back this Sunday..."
+          name: "Kick back this Sunday...",
+          tagline: ""
         }
       ]
     };
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.handleWindowResize);
+  },
+  mounted() {
+    this.handleWindowResize();
+
+    // assign event listener
+    window.addEventListener("resize", this.handleWindowResize);
+  },
+  methods: {
+    handleWindowResize() {
+      this.limiter =
+        (this.$refs.mainInnerRef.getBoundingClientRect().width / 195) | 0;
+    }
   }
-  // beforeDestroy() {
-  //   window.removeEventListener("resize", this.handleWindowResize);
-  // },
-  // mounted() {
-  //   this.handleWindowResize();
-
-  //   // assign event listener
-  //   window.addEventListener("resize", this.handleWindowResize);
-  // },
-  // methods: {
-  //   handleWindowResize() {
-  //     const calculation = Math.floor(
-  //       this.$refs.mainInnerRef.getBoundingClientRect().width / 195
-  //     );
-
-  //     this.limiter = calculation;
-  //   }
-  // }
 };
 </script>

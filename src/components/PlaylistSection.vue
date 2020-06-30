@@ -1,7 +1,7 @@
 <template>
   <div class="cardsWrapInner">
     <router-link
-      v-for="(playlist,idx) in matchedPlaylists"
+      v-for="(playlist, idx) in matchedPlaylists"
       :to="{ name: 'Playlists', params: { id: playlist.id }}"
       :key="idx"
     >
@@ -10,8 +10,8 @@
           <img :src="playlist.img" alt="Pic 1" />
         </div>
         <div class="cardContent">
-          <h3>{{playlist.name}}</h3>
-          <span>{{playlist.desc}}</span>
+          <h3>{{ playlist.name }}</h3>
+          <span>{{ playlist.desc }}</span>
         </div>
         <span class="playIcon">
           <svg height="16" role="img" width="16" viewBox="0 0 24 24">
