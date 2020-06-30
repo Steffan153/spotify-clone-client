@@ -1,5 +1,6 @@
 <template>
   <div class="outerWrap">
+    <Loading ref="loading" />
     <div class="App">
       <Sidebar />
       <div class="main">
@@ -16,10 +17,20 @@
 <script>
 import Nav from "./components/Nav.vue";
 import Sidebar from "./components/Sidebar.vue";
+import Loading from "./components/Loading.vue";
 export default {
   components: {
     Nav,
-    Sidebar
+    Sidebar,
+    Loading
+  },
+  metaInfo() {
+    return {
+      title: "Spotify Clone"
+    };
+  },
+  mounted() {
+    this.$loading = this.$refs.loading;
   }
 };
 </script>  

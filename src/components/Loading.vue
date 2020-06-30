@@ -11,7 +11,6 @@
 </template>
 
 <script>
-// https://github.com/nuxt/nuxt.js/blob/master/lib/app/components/nuxt-loading.vue
 export default {
   data: () => ({
     percent: 0,
@@ -22,7 +21,6 @@ export default {
     color: "linear-gradient(to right, #4facfe 0%, #00f2fe 100%)",
     failedColor: "red"
   }),
-
   methods: {
     start() {
       this.show = true;
