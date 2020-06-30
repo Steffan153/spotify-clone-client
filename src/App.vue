@@ -131,7 +131,7 @@ body {
 
 .main {
   width: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   position: relative;
   padding-top: 3.4rem;
   .mainContent {

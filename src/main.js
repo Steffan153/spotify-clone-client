@@ -13,7 +13,7 @@ axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
 let token = cookie.get('token');
 if (token) {
   const jwt_secret = process.env.VUE_APP_JWT_SECRET;
-  jwt.verify(token, jwt_secret, function(err, decoded) {
+  jwt.verify(token, jwt_secret, function (err, decoded) {
     if (err) {
       token = null;
       cookie.remove('token');
@@ -31,15 +31,15 @@ if (token) {
 }
 
 const options = {
-  color: '#34abeb',
+  color: '#1db954',
   failedColor: 'red',
-  thickness: '5px',
+  thickness: '3px',
   transition: {
     speed: '0.4s',
-    termination: 300,
+    termination: 400,
   },
-  autoRevert: true,
   location: 'top',
+  autoRevert: true,
   inverse: false,
 };
 Vue.use(VueProgressBar, options);
@@ -49,7 +49,9 @@ if (token) {
   axios
     .post('/api/auth/me')
     .then((res) => {
-      store.dispatch({ payload: res.data });
+      store.dispatch({
+        payload: res.data
+      });
     })
     .then(() => {
       new Vue({
