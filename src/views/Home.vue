@@ -44,24 +44,22 @@ export default {
         }
       ]
     };
+  },
+  mounted() {
+    this.handleWindowResize();
+    window.addEventListener("resize", this.handleWindowResize);
+  },
+  methods: {
+    handleWindowResize() {
+      const calculation = Math.floor(
+        this.$refs["mainInnerRef"].getBoundingClientRect().width / 195
+      );
+
+      this.limiter = calculation;
+    }
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.handleWindowResize);
   }
-  // beforeDestroy() {
-  //   window.removeEventListener("resize", this.handleWindowResize);
-  // },
-  // mounted() {
-  //   this.handleWindowResize();
-
-  //   // assign event listener
-  //   window.addEventListener("resize", this.handleWindowResize);
-  // },
-  // methods: {
-  //   handleWindowResize() {
-  //     const calculation = Math.floor(
-  //       this.$refs.mainInnerRef.getBoundingClientRect().width / 195
-  //     );
-
-  //     this.limiter = calculation;
-  //   }
-  // }
 };
 </script>
