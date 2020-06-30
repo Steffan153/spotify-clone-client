@@ -23,6 +23,9 @@ export default {
       vm.fromRoute = from;
     });
   },
+  mounted() {
+    console.log(this.$store.state); // hey let's go to auth.js
+  },
   methods: {
     goBack() {
       if (this.fromRoute) this.$router.back();

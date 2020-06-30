@@ -1,6 +1,5 @@
 <template>
   <div class="outerWrap">
-    <Loading ref="loading" />
     <div class="App">
       <Sidebar />
       <div class="main">
@@ -11,18 +10,18 @@
       </div>
     </div>
     <div class="musicControls">music controls</div>
+    <vue-progress-bar></vue-progress-bar>
   </div>
 </template>
 
 <script>
 import Nav from "./components/Nav.vue";
 import Sidebar from "./components/Sidebar.vue";
-import Loading from "./components/Loading.vue";
+
 export default {
   components: {
     Nav,
-    Sidebar,
-    Loading
+    Sidebar
   },
   metaInfo() {
     return {
@@ -30,7 +29,21 @@ export default {
     };
   },
   mounted() {
-    this.$loading = this.$refs.loading;
+    this.$Progress.finish();
+  },
+  created() {
+    this.$Progress.start();
+    this.$router.beforeEach((to, from, next) => {
+      if (to.meta.progress !== undefined) {
+        let meta = to.meta.progress;
+        this.$Progress.parseMeta(meta);
+      }
+      this.$Progress.start();
+      next();
+    });
+    this.$router.afterEach(() => {
+      this.$Progress.finish();
+    });
   }
 };
 </script>  
@@ -78,9 +91,6 @@ $greenMain: #1db954;
 
 * {
   box-sizing: border-box;
-  // padding: 0;
-  // margin: 0;
-  // outline: none;
 }
 
 body {

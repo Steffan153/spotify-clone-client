@@ -15,43 +15,48 @@ export const getters = {
   check: (state) => state.user !== null,
 };
 
-// mutations
 export const mutations = {
-  [types.SAVE_TOKEN](state, { token, remember }) {
-    state.token = token;
-    Cookies.set('token', token, { expires: remember ? 365 : null });
+  [types.SAVE_TOKEN](state, { access_token }) {
+    Cookies.set('token', access_token);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+  },
+  [types.LOGIN_USER](state, { user, access_token }) {
+    Cookies.set('token', access_token);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+    state.user = user;
   },
 
   [types.FETCH_USER_SUCCESS](state, { user }) {
     state.user = user;
   },
 
-  [types.FETCH_USER_FAILURE](state) {
-    state.token = null;
+  // eslint-disable-next-line no-unused-vars
+  [types.FETCH_USER_FAILURE](_s) {
     Cookies.remove('token');
+    axios.defaults.headers.common['Authorization'] = null;
   },
 
   [types.LOGOUT](state) {
-    state.user = null;
-    state.token = null;
-
     Cookies.remove('token');
-  },
-
-  [types.UPDATE_USER](state, { user }) {
-    state.user = user;
+    axios.defaults.headers.common['Authorization'] = null;
+    state.user = null;
   },
 };
 
-// actions
 export const actions = {
+  login({ commit }, payload) {
+    commit(types.LOGIN_USER, payload);
+  },
+  register({ commit }, payload) {
+    commit(types.LOGIN_USER, payload);
+  },
   saveToken({ commit }, payload) {
     commit(types.SAVE_TOKEN, payload);
   },
 
   async fetchUser({ commit }) {
     try {
-      const { data } = await axios.get('/api/user');
+      const { data } = await axios.get('/api/auth/me');
 
       commit(types.FETCH_USER_SUCCESS, { user: data });
     } catch (e) {
@@ -65,17 +70,10 @@ export const actions = {
 
   async logout({ commit }) {
     try {
-      await axios.post('/api/logout');
-    } catch (e) {
-      // (to prevent eslint from complaning)
-    }
+      await axios.post('/api/auth/logout');
+      // eslint-disable-next-line no-empty
+    } catch (e) {}
 
     commit(types.LOGOUT);
-  },
-
-  async fetchOauthUrl(_ctx, { provider }) {
-    const { data } = await axios.post(`/api/oauth/${provider}`);
-
-    return data.url;
   },
 };
