@@ -1,5 +1,11 @@
 <template>
-  <router-view />
+  <div class="outerWrap">
+    <div class="App">
+      <Sidebar />
+      <router-view></router-view>
+    </div>
+    <div class="musicControls">music controls</div>
+  </div>
 </template>
 
 <style lang="scss">
@@ -9,6 +15,7 @@ $greyLighter: #282828;
 $greyText: #b3b3b3;
 $greyNav: #090909;
 $greenMain: #1db954;
+
 * {
   margin: 0;
   padding: 0;
@@ -64,76 +71,6 @@ body {
   height: calc(100vh - 90px);
   background: $greyLight;
   display: flex;
-}
-
-.navBar {
-  width: 260px;
-  height: 100%;
-  background: $greyDark;
-  padding: 10px 10px 0;
-  display: flex;
-  flex-direction: column;
-  .logo {
-    padding: 1rem 0.8rem;
-    svg {
-      max-width: 130px;
-      p {
-        fill: white;
-      }
-    }
-  }
-  ul {
-    margin: 0;
-    padding: 0;
-    li {
-      color: $greyText;
-      list-style-type: none;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.3s ease-in-out;
-      font-family: circular-bold;
-      a {
-        color: inherit;
-        text-decoration: none;
-        width: 100%;
-        border-radius: 5px;
-        padding: 0.5rem 0.8rem;
-        display: flex;
-        align-items: center;
-
-        &:visited {
-          color: inherit;
-          text-decoration: none;
-        }
-
-        &.active {
-          background: $greyLighter;
-          color: white;
-          svg {
-            fill: white;
-          }
-        }
-      }
-      svg {
-        fill: currentColor;
-        margin-right: 15px;
-      }
-
-      &:hover {
-        color: white;
-      }
-    }
-  }
-  .cookies {
-    font-size: 0.6rem;
-    color: $greyText;
-    text-align: center;
-    margin-top: auto;
-    padding: 1rem;
-    span {
-      display: block;
-    }
-  }
 }
 
 .outerWrap {
@@ -424,9 +361,14 @@ ul.songList {
     }
   }
 }
-// wow too big
 </style>
 
 <script>
-// I will push so you could have the SVGs / Fonts
+import Sidebar from "./components/Sidebar.vue";
+
+export default {
+  components: {
+    Sidebar
+  }
+};
 </script>
