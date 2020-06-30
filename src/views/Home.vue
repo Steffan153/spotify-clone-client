@@ -46,20 +46,21 @@ export default {
       ]
     };
   },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.handleWindowResize);
-  },
   mounted() {
     this.handleWindowResize();
-
-    // assign event listener
     window.addEventListener("resize", this.handleWindowResize);
   },
   methods: {
     handleWindowResize() {
-      this.limiter =
-        (this.$refs.mainInnerRef.getBoundingClientRect().width / 195) | 0;
+      const calculation = Math.floor(
+        this.$refs["mainInnerRef"].getBoundingClientRect().width / 195
+      );
+
+      this.limiter = calculation;
     }
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.handleWindowResize);
   }
 };
 </script>
