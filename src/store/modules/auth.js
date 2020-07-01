@@ -20,6 +20,10 @@ export const mutations = {
     Cookies.set('token', access_token);
     axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
   },
+  [types.SAVE_USER](state, user) {
+    state.user = user;
+    console.log(state.user);
+  },
   [types.LOGIN_USER](state, { user, access_token }) {
     Cookies.set('token', access_token);
     axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
@@ -53,12 +57,14 @@ export const actions = {
   saveToken({ commit }, payload) {
     commit(types.SAVE_TOKEN, payload);
   },
-
+  saveUser({ commit }, { user }) {
+    commit(types.SAVE_USER, user);
+  },
   async fetchUser({ commit }) {
     try {
-      const { data } = await axios.get('/api/auth/me');
+      const { data } = await axios.post('/api/auth/me');
 
-      commit(types.FETCH_USER_SUCCESS, { user: data });
+      commit(types.FETCH_USER_SUCCESS, data);
     } catch (e) {
       commit(types.FETCH_USER_FAILURE);
     }
@@ -73,9 +79,6 @@ export const actions = {
       await axios.post('/api/auth/logout');
       // eslint-disable-next-line no-empty
     } catch (e) {}
-
-    // what next?
-    // ????????
 
     commit(types.LOGOUT);
   },

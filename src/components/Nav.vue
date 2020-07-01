@@ -9,16 +9,38 @@
           />
         </svg>
       </a>
-      <router-link class="loginButton" :to="{name: 'Login'}">Login</router-link>
+      <router-link class="loginButton" :to="{name: 'Login'}" v-if="!loggedIn">Login</router-link>
+      <button v-else class="loginButton">Logout</button>
+      <!-- still not working -->
+      <!-- that means that the store is not working ? -->
+      <!-- it is not triggering an update -->
+      <!-- so the value is being set in the store ? -->
+      <!-- Well, let me test -->
+      <!-- yeah it is set -->
+      <!-- maybe we need an observable or something -->
+      <!-- yeah I can try that -->
+      <!-- just need to install rxjs -->
+      <!-- ok? -->
+      <!-- you have the vue dev tools ? -->
+      <!-- I can install them in just a second -->
+      <!-- ok -->
+      <!-- I dont like cluttering my browsers :) -->
+      <!-- you could try in the console -->
+      <!--  you could read this article 
+      https://forum.vuejs.org/t/re-render-component-with-api-call-based-on-vuex-store-change/62253/3-->
+      <!-- Yes the user is set -->
+      <!-- Ill try that -->
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {
-      fromRoute: null
+      fromRoute: null,
+      loggedIn: false
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -27,9 +49,38 @@ export default {
     });
   },
   mounted() {
-    console.log(this.$store.state); // hey let's go to auth.js
+    this.loggedIn = !!this.$store.state.auth.user;
+    // doesnt work without this
   },
+  computed: mapState({
+    user: s => s.auth.user
+  }),
+  watch: {
+    user() {
+      this.loggedIn = !!this.$store.state.auth.user; // why is this two !!
+      // wdym
+      // why you wrote two !! you dont need them
+      // this should still work
+      // what should still work
+      // oh that works too
+      // just to convert it to bool
+      // to make it cleaner
+      // Oh ok , at the end of the project we will find random comments above complex code saying 'lol'
+      // it is less confusing
+      // yes lol
+      // wdym
+    }
+  },
+  // WORKING!!!
+
+  // lol 👏👏
+  // lol
   methods: {
+    // lol
+    // that is there for a purpose
+    // I have to tell this to Ivan
+    // this is hilarious
+    // and leave that there :tf:
     goBack() {
       if (this.fromRoute) this.$router.back();
       else {

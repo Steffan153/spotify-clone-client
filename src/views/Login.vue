@@ -7,7 +7,7 @@
         <input type="password" placeholder="Password" v-model="password" required />
         <button type="submit">Login</button>
       </form>
-      <router-link :to="{name: 'Register'}">Need an account ?</router-link>
+      <router-link :to="{name: 'Register'}" class="link">Need an account?</router-link>
     </div>
   </div>
 </template>
@@ -42,6 +42,11 @@ export default {
     }
   }
 };
+// Yeah I know we are not done yet
+// the link looks horrible
+// it needs styling
+// Go to nav
+// :tf:
 </script>
 
 <style lang="scss" scoped>
@@ -90,5 +95,9 @@ h1 {
   border-radius: 20px;
   color: #fff;
   font-family: inherit;
+}
+
+.link {
+  color: white;
 }
 </style>
