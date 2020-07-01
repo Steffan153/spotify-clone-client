@@ -14,7 +14,11 @@
 <script>
 import PlaylistSection from "../components/PlaylistSection.vue";
 export default {
-  name: "Home",
+  metaInfo() {
+    return {
+      title: "Spotify Clone - Home"
+    };
+  },
   components: {
     PlaylistSection
   },

@@ -19,14 +19,14 @@ import Nav from "./components/Nav.vue";
 import Sidebar from "./components/Sidebar.vue";
 
 export default {
-  components: {
-    Nav,
-    Sidebar
-  },
   metaInfo() {
     return {
       title: "Spotify Clone"
     };
+  },
+  components: {
+    Nav,
+    Sidebar
   },
   mounted() {
     this.$Progress.finish();

@@ -17,6 +17,11 @@
 import axios from "axios";
 
 export default {
+  metaInfo() {
+    return {
+      title: "Spotify Clone - Register"
+    };
+  },
   data() {
     return {
       name: "",

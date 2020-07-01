@@ -1,6 +1,6 @@
 <template>
   <div class="mainInner">
-    <h1>Search</h1>
+    <h1>My Library</h1>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 export default {
   metaInfo() {
     return {
-      title: "Spotify Clone - Search"
+      title: "Spotify Clone - My Library"
     };
   }
 };

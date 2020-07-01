@@ -16,15 +16,15 @@
 import axios from "axios";
 
 export default {
+  metaInfo() {
+    return {
+      title: "Spotify Clone - Login"
+    };
+  },
   data() {
     return {
       email: "",
       password: ""
-    };
-  },
-  metaInfo() {
-    return {
-      title: "Spotify Clone - Login"
     };
   },
   methods: {
