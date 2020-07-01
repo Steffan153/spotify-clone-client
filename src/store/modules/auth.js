@@ -16,7 +16,9 @@ export const getters = {
 };
 
 export const mutations = {
-  [types.SAVE_TOKEN](state, { access_token }) {
+  [types.SAVE_TOKEN](state, {
+    access_token
+  }) {
     Cookies.set('token', access_token);
     axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
   },
@@ -24,13 +26,18 @@ export const mutations = {
     state.user = user;
     console.log(state.user);
   },
-  [types.LOGIN_USER](state, { user, access_token }) {
+  [types.LOGIN_USER](state, {
+    user,
+    access_token
+  }) {
     Cookies.set('token', access_token);
     axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
     state.user = user;
   },
 
-  [types.FETCH_USER_SUCCESS](state, { user }) {
+  [types.FETCH_USER_SUCCESS](state, {
+    user
+  }) {
     state.user = user;
   },
 
@@ -48,21 +55,30 @@ export const mutations = {
 };
 
 export const actions = {
-  login({ commit }, payload) {
+  login({
+    commit
+  }, payload) {
     commit(types.LOGIN_USER, payload);
   },
-  register({ commit }, payload) {
-    commit(types.LOGIN_USER, payload);
-  },
-  saveToken({ commit }, payload) {
+  saveToken({
+    commit
+  }, payload) {
     commit(types.SAVE_TOKEN, payload);
   },
-  saveUser({ commit }, { user }) {
+  saveUser({
+    commit
+  }, {
+    user
+  }) {
     commit(types.SAVE_USER, user);
   },
-  async fetchUser({ commit }) {
+  async fetchUser({
+    commit
+  }) {
     try {
-      const { data } = await axios.post('/api/auth/me');
+      const {
+        data
+      } = await axios.post('/api/auth/me');
 
       commit(types.FETCH_USER_SUCCESS, data);
     } catch (e) {
@@ -70,11 +86,15 @@ export const actions = {
     }
   },
 
-  updateUser({ commit }, payload) {
+  updateUser({
+    commit
+  }, payload) {
     commit(types.UPDATE_USER, payload);
   },
 
-  async logout({ commit }) {
+  async logout({
+    commit
+  }) {
     try {
       await axios.post('/api/auth/logout');
       // eslint-disable-next-line no-empty

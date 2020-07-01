@@ -29,24 +29,22 @@ export default {
   },
   methods: {
     async login() {
+      this.$Progress.start();
       try {
         const { data } = await axios.post("/api/auth/login", {
           email: this.email,
           password: this.password
         });
         this.$store.dispatch("auth/login", data);
+        this.$router.push({ name: "Home" });
+        this.$Progress.finish();
       } catch (err) {
-        // Let me start up the client and server
         console.log(err);
+        this.$Progress.fail();
       }
     }
   }
 };
-// Yeah I know we are not done yet
-// the link looks horrible
-// it needs styling
-// Go to nav
-// :tf:
 </script>
 
 <style lang="scss" scoped>

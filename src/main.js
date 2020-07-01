@@ -13,7 +13,7 @@ axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
 let token = cookie.get('token');
 if (token) {
   const jwt_secret = process.env.VUE_APP_JWT_SECRET;
-  jwt.verify(token, jwt_secret, function(err, decoded) {
+  jwt.verify(token, jwt_secret, function (err, decoded) {
     if (err) {
       token = null;
       cookie.remove('token');
@@ -39,8 +39,6 @@ const options = {
     termination: 400,
   },
   location: 'top',
-  autoRevert: true,
-  inverse: false,
 };
 Vue.use(VueProgressBar, options);
 
@@ -48,7 +46,9 @@ if (token) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   axios
     .post('/api/auth/me')
-    .then(({ data }) => {
+    .then(({
+      data
+    }) => {
       store.dispatch('auth/saveUser', data);
     })
     .then(() => {

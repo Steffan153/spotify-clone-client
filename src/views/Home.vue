@@ -2,7 +2,6 @@
   <div class="mainInner" ref="mainInnerRef">
     <div class="cardsWrap" v-for="category in categories" :key="category.id">
       <h2>{{ category.name }}</h2>
-      <span class="seeAll">SEE ALL</span>
       <p class="subText">{{ category.tagline }}</p>
       <playlist-section :category_id="category.id" :limiter="limiter" />
     </div>

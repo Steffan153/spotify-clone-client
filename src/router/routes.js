@@ -3,9 +3,10 @@ import Search from '../views/Search.vue';
 import Playlists from '../views/Playlists.vue';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
+import guest from '../middlewares/guest';
+// import auth from '../middlewares/auth';
 
-export default [
-  {
+export default [{
     path: '/',
     name: 'Home',
     component: Home,
@@ -24,10 +25,12 @@ export default [
     path: '/login',
     name: 'Login',
     component: Login,
+    beforeEnter: guest
   },
   {
     path: '/register',
     name: 'Register',
     component: Register,
+    beforeEnter: guest
   },
 ];

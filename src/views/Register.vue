@@ -2,7 +2,7 @@
   <div class="mainInner">
     <div class="formWrapper">
       <h1>Create an account</h1>
-      <form @submit.prevent="login" class="loginForm">
+      <form @submit.prevent="register" class="loginForm">
         <input type="text" placeholder="Name" v-model="name" required />
         <input type="text" placeholder="Email" v-model="email" required />
         <input type="password" placeholder="Password" v-model="password" required />
@@ -25,17 +25,20 @@ export default {
     };
   },
   methods: {
-    async login() {
+    async register() {
+      this.$Progress.start();
       try {
         const { data } = await axios.post("/api/auth/register", {
+          name: this.name,
           email: this.email,
-          password: this.password,
-          name: this.name
+          password: this.password
         });
-        this.$store.dispatch("auth/register", data);
+        this.$store.dispatch("auth/login", data);
+        this.$router.push({ name: "Home" });
+        this.$Progress.finish();
       } catch (err) {
-        // Let me start up the client and server
         console.log(err);
+        this.$Progress.fail();
       }
     }
   }

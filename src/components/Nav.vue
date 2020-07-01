@@ -10,37 +10,37 @@
         </svg>
       </a>
       <router-link class="loginButton" :to="{name: 'Login'}" v-if="!loggedIn">Login</router-link>
-      <button v-else class="loginButton">Logout</button>
-      <!-- still not working -->
-      <!-- that means that the store is not working ? -->
-      <!-- it is not triggering an update -->
-      <!-- so the value is being set in the store ? -->
-      <!-- Well, let me test -->
-      <!-- yeah it is set -->
-      <!-- maybe we need an observable or something -->
-      <!-- yeah I can try that -->
-      <!-- just need to install rxjs -->
-      <!-- ok? -->
-      <!-- you have the vue dev tools ? -->
-      <!-- I can install them in just a second -->
-      <!-- ok -->
-      <!-- I dont like cluttering my browsers :) -->
-      <!-- you could try in the console -->
-      <!--  you could read this article 
-      https://forum.vuejs.org/t/re-render-component-with-api-call-based-on-vuex-store-change/62253/3-->
-      <!-- Yes the user is set -->
-      <!-- Ill try that -->
+      <div class="popupMenuContainer" v-else>
+        <button class="loginButton" v-on-clickaway="closePopup" @click="togglePopup">
+          {{ user.name }}
+          <svg viewBox="0 0 24 24">
+            <path
+              fill="currentColor"
+              d="M15.54 21.15L5.095 12.23 15.54 3.31l.65.76-9.555 8.16 9.555 8.16"
+            />
+          </svg>
+        </button>
+        <ul class="popupMenu" v-if="isOpen">
+          <li>
+            <router-link to="/profile">Profile</router-link>
+          </li>
+          <li @click="logout" class="logoutButton">Logout</li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import { mixin as clickaway } from "vue-clickaway";
 export default {
+  mixins: [clickaway],
   data() {
     return {
       fromRoute: null,
-      loggedIn: false
+      loggedIn: false,
+      isOpen: false
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -50,42 +50,30 @@ export default {
   },
   mounted() {
     this.loggedIn = !!this.$store.state.auth.user;
-    // doesnt work without this
   },
   computed: mapState({
     user: s => s.auth.user
   }),
   watch: {
     user() {
-      this.loggedIn = !!this.$store.state.auth.user; // why is this two !!
-      // wdym
-      // why you wrote two !! you dont need them
-      // this should still work
-      // what should still work
-      // oh that works too
-      // just to convert it to bool
-      // to make it cleaner
-      // Oh ok , at the end of the project we will find random comments above complex code saying 'lol'
-      // it is less confusing
-      // yes lol
-      // wdym
+      this.loggedIn = !!this.$store.state.auth.user;
     }
   },
-  // WORKING!!!
-
-  // lol 👏👏
-  // lol
   methods: {
-    // lol
-    // that is there for a purpose
-    // I have to tell this to Ivan
-    // this is hilarious
-    // and leave that there :tf:
     goBack() {
       if (this.fromRoute) this.$router.back();
       else {
         if (this.$router.history.current.path !== "/") this.$router.push("/");
       }
+    },
+    logout() {
+      this.$store.dispatch("auth/logout");
+    },
+    togglePopup() {
+      this.isOpen = !this.isOpen;
+    },
+    closePopup() {
+      this.isOpen = false;
     }
   }
 };
@@ -98,6 +86,7 @@ $greyLighter: #282828;
 $greyText: #b3b3b3;
 $greyNav: #090909;
 $greenMain: #1db954;
+
 .loginButton {
   color: white;
   border-radius: 20px;
@@ -109,6 +98,13 @@ $greenMain: #1db954;
   border: none;
   font-family: inherit;
   text-decoration: none;
+  outline: none;
+  svg {
+    width: 10px;
+    height: 10px;
+    transform: rotate(-90deg);
+    margin-left: 6px;
+  }
 }
 
 .upperNav {
@@ -147,5 +143,41 @@ $greenMain: #1db954;
 .back_btn svg {
   width: 20px;
   height: 20px;
+}
+
+.popupMenuContainer {
+  position: relative;
+}
+
+.popupMenu {
+  position: absolute;
+  background: $greyDark;
+  padding: 7px 0;
+  left: 0;
+  margin-top: 10px;
+  margin-left: -20px;
+  list-style: none;
+  width: 150px;
+  border-radius: 4px;
+}
+
+.popupMenu li {
+  color: #fff;
+  &.logoutButton {
+    padding: 10px 30px;
+    &:hover {
+      color: red;
+    }
+  }
+  a {
+    padding: 10px 30px;
+    color: inherit;
+    display: block;
+    text-decoration: none;
+  }
+  cursor: pointer;
+  &:hover {
+    background: $greyLight;
+  }
 }
 </style>
