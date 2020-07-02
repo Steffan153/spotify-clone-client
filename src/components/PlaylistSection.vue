@@ -1,17 +1,17 @@
 <template>
   <div class="cardsWrapInner">
     <router-link
-      v-for="(playlist, idx) in matchedPlaylists"
+      v-for="playlist in playlists"
       :to="{ name: 'Playlists', params: { id: playlist.id }}"
-      :key="idx"
+      :key="playlist.id"
     >
       <div class="card">
         <div class="cardImage">
-          <img :src="playlist.img" alt="Pic 1" />
+          <img :src="playlist.image_path" loading="lazy" :alt="`${playlist.name} picture`" />
         </div>
         <div class="cardContent">
           <h3>{{ playlist.name }}</h3>
-          <span>{{ playlist.desc }}</span>
+          <span>{{ playlist.description }}</span>
         </div>
         <span class="playIcon">
           <svg height="16" role="img" width="16" viewBox="0 0 24 24">
@@ -27,159 +27,10 @@
 export default {
   props: {
     limiter: Number,
-    category_id: Number
-  },
-  data() {
-    return {
-      dataPlaylists: [
-        {
-          id: 101,
-          category_id: 3,
-          name: "Home playlist 1",
-          img:
-            "https://images.unsplash.com/photo-1587201572498-2bc131fbf113?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=924&q=80",
-          desc: "Lorem ipsum"
-        },
-        {
-          id: 102,
-          category_id: 3,
-          name: "Home playlist 2",
-          img:
-            "https://images.unsplash.com/photo-1587151711096-23c51f92c920?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80",
-          desc: "Lorem ipsum"
-        },
-        {
-          id: 103,
-          category_id: 3,
-          name: "Home playlist 3",
-          img:
-            "https://images.unsplash.com/photo-1587223075055-82e9a937ddff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80",
-          desc: "Lorem ipsum"
-        },
-        {
-          id: 103,
-          category_id: 3,
-          name: "Home playlist 3",
-          img:
-            "https://images.unsplash.com/photo-1587223075055-82e9a937ddff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80",
-          desc: "Lorem ipsum"
-        },
-        {
-          id: 103,
-          category_id: 3,
-          name: "Home playlist 3",
-          img:
-            "https://images.unsplash.com/photo-1587223075055-82e9a937ddff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80",
-          desc: "Lorem ipsum"
-        },
-        {
-          id: 103,
-          category_id: 3,
-          name: "Home playlist 3",
-          img:
-            "https://images.unsplash.com/photo-1587223075055-82e9a937ddff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80",
-          desc: "Lorem ipsum"
-        },
-        {
-          id: 103,
-          category_id: 3,
-          name: "Home playlist 3",
-          img:
-            "https://images.unsplash.com/photo-1587223075055-82e9a937ddff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80",
-          desc: "Lorem ipsum"
-        },
-        {
-          id: 103,
-          category_id: 3,
-          name: "Home playlist 3",
-          img:
-            "https://images.unsplash.com/photo-1587223075055-82e9a937ddff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80",
-          desc: "Lorem ipsum"
-        },
-        {
-          id: 103,
-          category_id: 3,
-          name: "Home playlist 3",
-          img:
-            "https://images.unsplash.com/photo-1587223075055-82e9a937ddff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80",
-          desc: "Lorem ipsum"
-        },
-        {
-          id: 103,
-          category_id: 3,
-          name: "Home playlist 3",
-          img:
-            "https://images.unsplash.com/photo-1587223075055-82e9a937ddff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80",
-          desc: "Lorem ipsum"
-        },
-        {
-          id: 103,
-          category_id: 3,
-          name: "Home playlist 3",
-          img:
-            "https://images.unsplash.com/photo-1587223075055-82e9a937ddff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80",
-          desc: "Lorem ipsum"
-        },
-        {
-          id: 103,
-          category_id: 3,
-          name: "Home playlist 3",
-          img:
-            "https://images.unsplash.com/photo-1587223075055-82e9a937ddff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80",
-          desc: "Lorem ipsum"
-        },
-        {
-          id: 103,
-          category_id: 3,
-          name: "Home playlist 3",
-          img:
-            "https://images.unsplash.com/photo-1587223075055-82e9a937ddff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80",
-          desc: "Lorem ipsum"
-        },
-        {
-          id: 104,
-          category_id: 1,
-          name: "Focus playlist 1",
-          img:
-            "https://images.unsplash.com/photo-1587165282385-fe9bbf5eb1a0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80",
-          desc: "Lorem ipsum"
-        },
-        {
-          id: 105,
-          category_id: 4,
-          name: "Sunday playist",
-          img:
-            "https://images.unsplash.com/photo-1587143602695-c980e283be9a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2702&q=80",
-          desc: "Lorem ipsum"
-        },
-        {
-          id: 106,
-          category_id: 2,
-          name: "Mood playist 1 ",
-          img:
-            "https://images.unsplash.com/photo-1587220111918-7a5c0f0c46f5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80",
-          desc: "Lorem ipsum"
-        },
-        {
-          id: 107,
-          category_id: 2,
-          name: "Mood playist 2",
-          img:
-            "https://images.unsplash.com/photo-1587169544748-d21bd810f57e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80",
-          desc: "Lorem ipsum"
-        }
-      ]
-    };
-  },
-  computed: {
-    matchedPlaylists() {
-      return this.dataPlaylists
-        .filter(playlist => playlist.category_id === this.category_id)
-        .slice(0, this.limiter);
-    }
+    playlists: Array
   }
 };
 </script>
 
-<style>
+<style lang="scss">
 </style>

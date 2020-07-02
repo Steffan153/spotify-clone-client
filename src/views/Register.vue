@@ -51,13 +51,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$greyDark: #040404;
-$greyLight: #131313;
-$greyLighter: #282828;
-$greyText: #b3b3b3;
-$greyNav: #090909;
-$greenMain: #1db954;
-
 h1 {
   margin: 20px 0;
   font-size: 50px;
