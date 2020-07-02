@@ -6,6 +6,10 @@ import store from './store';
 import axios from 'axios';
 import cookie from 'js-cookie';
 import jwt from 'jsonwebtoken';
+import {
+  getAllPlaylists
+} from './api/playlists';
+import infiniteScroll from 'vue-infinite-scroll'
 
 Vue.config.productionTip = false;
 axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
@@ -30,7 +34,7 @@ if (token) {
   });
 }
 
-const options = {
+Vue.use(VueProgressBar, {
   color: '#1db954',
   failedColor: 'red',
   thickness: '3px',
@@ -39,8 +43,18 @@ const options = {
     termination: 400,
   },
   location: 'top',
-};
-Vue.use(VueProgressBar, options);
+});
+Vue.use(infiniteScroll);
+
+const mountApp = () => new Vue({
+  router,
+  store,
+  render: (h) => h(App),
+}).$mount('#app');
+
+const loadInitialData = () => getAllPlaylists().then(data => {
+  store.dispatch('playlists/savePlaylists', data);
+});
 
 if (token) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -50,18 +64,8 @@ if (token) {
       data
     }) => {
       store.dispatch('auth/saveUser', data);
-    })
-    .then(() => {
-      new Vue({
-        router,
-        store,
-        render: (h) => h(App),
-      }).$mount('#app');
-    });
+      loadInitialData();
+    }).then(() => mountApp());
 } else {
-  new Vue({
-    router,
-    store,
-    render: (h) => h(App),
-  }).$mount('#app');
+  loadInitialData().then(() => mountApp());
 }

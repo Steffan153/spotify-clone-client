@@ -1,6 +1,6 @@
 <template>
   <div class="outerWrap">
-    <div class="App">
+    <div class="App" :class="{'full': !$store.state.player.currentSong.id}">
       <Sidebar />
       <div class="main">
         <Nav />
@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    <div class="musicControls">music controls</div>
+    <player />
     <vue-progress-bar></vue-progress-bar>
   </div>
 </template>
@@ -17,6 +17,7 @@
 <script>
 import Nav from "./components/Nav.vue";
 import Sidebar from "./components/Sidebar.vue";
+import Player from "./components/Player.vue";
 
 export default {
   metaInfo() {
@@ -26,7 +27,8 @@ export default {
   },
   components: {
     Nav,
-    Sidebar
+    Sidebar,
+    Player
   },
   mounted() {
     this.$Progress.finish();
@@ -103,23 +105,14 @@ body {
   display: flex;
 }
 
+.full {
+  height: 100vh;
+}
+
 .outerWrap {
   background: grey;
   height: 100vh;
   min-height: 100%;
-}
-
-.musicControls {
-  background: $greyLighter;
-  text-align: center;
-  height: 90px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  z-index: 2;
-  position: relative;
-  border-top: 1px solid $greyDark;
 }
 
 .main {
@@ -212,55 +205,6 @@ body {
   bottom: 1.2rem;
   svg {
     margin: auto;
-  }
-}
-
-ul.songList {
-  padding: 0;
-  margin-top: 20px;
-  li {
-    list-style-type: none;
-    width: 100%;
-    padding: 0.8rem;
-    display: flex;
-    align-items: center;
-    transition: background 0.2s ease-in-out;
-    &:hover {
-      background: rgba(255, 255, 255, 0.1);
-      .songIcon {
-        .noteI {
-          display: none;
-        }
-        .playI {
-          display: block;
-        }
-      }
-    }
-    .songDetails {
-      h3 {
-        margin: 0;
-        font-weight: 300;
-        font-size: 1rem;
-      }
-      span {
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 0.9rem;
-      }
-    }
-    .songTime {
-      margin-left: auto;
-    }
-    .songIcon {
-      padding-right: 1rem;
-      .playI {
-        display: none;
-      }
-      svg {
-        fill: rgba(255, 255, 255, 0.7);
-        width: 15px;
-        height: 15px;
-      }
-    }
   }
 }
 </style>

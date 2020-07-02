@@ -1,19 +1,19 @@
 import axios from 'axios';
 
 
-const getAllPlaylists = () => {
-  return axios.get('/api/playlists')
+const getAllPlaylists = (page = 1) => {
+  return axios.get(`/api/playlists?page=${page}`)
     .then(res => res.data)
     .catch(err => {
       throw err
     });
 }
 
-const getSinglePlaylists = (id) => {
+const getSinglePlaylist = (id) => {
   return axios.get(`/api/playlists/${id}`).then(res => res.data);
 }
 
 export {
   getAllPlaylists,
-  getSinglePlaylists
+  getSinglePlaylist
 };

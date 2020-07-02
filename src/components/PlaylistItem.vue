@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <li @click="click">
     <div class="songIcon">
       <svg class="noteI" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
         <path
@@ -16,18 +16,93 @@
       </svg>
     </div>
     <div class="songDetails">
-      <h3>Held Down</h3>
-      <span>Laura Marling</span>
+      <h3>{{ song.name }}</h3>
+      <span>{{ uppercaseArtist }}</span>
     </div>
     <div class="songTime">
-      <span>4:07</span>
+      <span>{{ totalDuration }}</span>
     </div>
   </li>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    song: Object,
+    artist: String,
+    click: Function
+  },
+  computed: {
+    totalDuration() {
+      const total = this.song.duration;
+      const mins = Math.floor(total / 60);
+      const secs = total - mins * 60;
+      return `${this.str_pad_left(mins, "0", 2)}:${this.str_pad_left(
+        secs,
+        "0",
+        2
+      )}`;
+    },
+    uppercaseArtist() {
+      return this.artist
+        .toLowerCase()
+        .split(" ")
+        .map(name => name[0].toUpperCase() + name.slice(1, name.length))
+        .join(" ");
+    }
+  },
+  methods: {
+    str_pad_left(string, pad, length) {
+      return (new Array(length + 1).join(pad) + string).slice(-length);
+    }
+  }
+};
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+li {
+  list-style-type: none;
+  cursor: pointer;
+  width: 100%;
+  padding: 0.8rem;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s ease-in-out;
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    .songIcon {
+      .noteI {
+        display: none;
+      }
+      .playI {
+        display: block;
+      }
+    }
+  }
+  .songDetails {
+    h3 {
+      margin: 0;
+      font-weight: 300;
+      font-size: 1rem;
+    }
+    span {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+  }
+  .songTime {
+    margin-left: auto;
+  }
+  .songIcon {
+    padding-right: 1rem;
+    .playI {
+      display: none;
+    }
+    svg {
+      fill: rgba(255, 255, 255, 0.7);
+      width: 15px;
+      height: 15px;
+    }
+  }
+}
 </style>

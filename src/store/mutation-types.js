@@ -10,3 +10,6 @@ export const LOGIN_USER = 'LOGIN_USER';
 
 // playlists
 export const SAVE_PLAYLISTS = 'SAVE_PLAYLISTS';
+
+// player
+export const SET_CURRENT_SONG = 'SET_CURRENT_SONG';

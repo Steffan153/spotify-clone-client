@@ -3,20 +3,17 @@
     <div class="mainInner">
       <div class="playlistPageInfo">
         <div class="playlistPageImage">
-          <img
-            src="https://images.unsplash.com/photo-1587201572498-2bc131fbf113?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=924&q=80"
-            alt="pic"
-          />
+          <img :src="playlist.image" :alt="`${playlist.name} picture`" />
         </div>
         <div class="playlistPageContent">
           <p class="smallText uppercase bold">Playlist</p>
-          <h1>A Perfect Day</h1>
+          <h1>{{ playlist.name }}</h1>
 
-          <p class="tagline">Minimalism, electronica and modern classical to concentrate to.</p>
+          <p class="tagline">{{ playlist.description }}</p>
           <div class="playlistPageDesc">
-            <p class="spotify">Spotify</p>
-            <span>699,428 likes</span>
-            <span>4hr 35 min</span>
+            <p class="spotify">{{ uppercaseArtist }}</p>
+            <span>{{ playlist.likes }} likes</span>
+            <span>{{ totalDuration }}</span>
           </div>
         </div>
       </div>
@@ -39,13 +36,12 @@
           </div>
         </div>
 
-        <ul class="songList">
-          <playlist-item />
-          <playlist-item />
-          <playlist-item />
-          <playlist-item />
-          <playlist-item />
-          <playlist-item />
+        <ul class="songList" v-for="song in playlist.songs" :key="song.id">
+          <playlist-item
+            :click="() => setCurrentSong(song, playlist.image, song.artist ? song.artist : playlist.artist)"
+            :song="song"
+            :artist="song.artist ? song.artist : playlist.artist"
+          />
         </ul>
       </div>
     </div>
@@ -54,12 +50,61 @@
 
 <script>
 import PlaylistItem from "../components/PlaylistItem.vue";
+import { getSinglePlaylist } from "../api/playlists";
 export default {
   components: {
     PlaylistItem
   },
-  mounted() {
-    console.log(this.$route.params.id);
+  data() {
+    return {
+      playlist: {}
+    };
+  },
+  async beforeRouteEnter(to, from, next) {
+    try {
+      const data = await getSinglePlaylist(to.params.id);
+      next(vm => {
+        vm.playlist = data;
+      });
+    } catch (e) {
+      next(vm => {
+        vm.$Progress.fail();
+        vm.$router.push({ name: "Home" });
+      });
+    }
+  },
+  computed: {
+    totalDuration() {
+      const total = this.playlist.total_duration;
+      const mins = Math.floor(total / 60);
+      const secs = total - mins * 60;
+      const hrs = Math.floor(total / 3600);
+      return `
+        ${this.str_pad_left(hrs, "0", 2)}:${this.str_pad_left(
+        mins,
+        "0",
+        2
+      )}:${this.str_pad_left(secs, "0", 2)}
+      `;
+    },
+    uppercaseArtist() {
+      if (!this.playlist.artist) return "";
+      return this.playlist.artist
+        .toLowerCase()
+        .split(" ")
+        .map(name => name[0].toUpperCase() + name.slice(1, name.length))
+        .join(" ");
+    }
+  },
+  methods: {
+    str_pad_left(string, pad, length) {
+      return (new Array(length + 1).join(pad) + string).slice(-length);
+    },
+    setCurrentSong(song, image, artist) {
+      if (this.$store.state.player.currentSong.id === song.id) return;
+      this.$store.dispatch("player/setCurrentSong", { ...song, image, artist });
+      console.log(this.$store.state.player.currentSong);
+    }
   }
 };
 </script>  
@@ -179,5 +224,10 @@ export default {
       }
     }
   }
+}
+
+ul.songList {
+  padding: 0;
+  margin: 20px 0;
 }
 </style>
