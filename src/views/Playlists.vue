@@ -100,10 +100,14 @@ export default {
     str_pad_left(string, pad, length) {
       return (new Array(length + 1).join(pad) + string).slice(-length);
     },
-    setCurrentSong(song, image, artist) {
+    setCurrentSong(song, image) {
       if (this.$store.state.player.currentSong.id === song.id) return;
-      this.$store.dispatch("player/setCurrentSong", { ...song, image, artist });
-      console.log(this.$store.state.player.currentSong);
+      this.$store.dispatch("player/setCurrentSong", {
+        ...song,
+        image,
+        playlistName: this.playlist.name
+      });
+      // console.log(this.$store.state.player.currentSong);
     }
   }
 };
