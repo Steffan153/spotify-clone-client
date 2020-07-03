@@ -1,9 +1,9 @@
 <template>
-  <div class="playlistPage">
+  <div class="playlistPage" :style="{backgroundImage: `linear-gradient(${color}, #121212 40%)`}">
     <div class="mainInner">
       <div class="playlistPageInfo">
         <div class="playlistPageImage">
-          <img :src="playlist.image" :alt="`${playlist.name} picture`" />
+          <img loading="lazy" :src="playlist.image" :alt="`${playlist.name} picture`" />
         </div>
         <div class="playlistPageContent">
           <p class="smallText uppercase bold">Playlist</p>
@@ -19,8 +19,27 @@
       </div>
       <div class="playlistPageSongs">
         <div class="playlistButtons">
-          <span class="playIcon">
-            <svg height="16" role="img" width="16" viewBox="0 0 24 24">
+          <span class="playIcon" @click="playSong">
+            <svg
+              height="16"
+              role="img"
+              width="16"
+              viewBox="0 0 24 24"
+              v-if="isPlaying && currentSong.playlistID === playlist.id"
+            >
+              <svg
+                class="pause"
+                viewBox="-45 0 327 327"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+              >
+                <path
+                  d="M158 0h71a8 8 0 018 8v311a8 8 0 01-8 8h-71a8 8 0 01-8-8V8a8 8 0 018-8zm0 0M8 0h71a8 8 0 018 8v311a8 8 0 01-8 8H8a8 8 0 01-8-8V8a8 8 0 018-8zm0 0"
+                />
+              </svg>
+            </svg>
+
+            <svg viewBox="0 0 24 24" v-else>
               <polygon points="21.57 12 5.98 3 5.98 21 21.57 12" fill="currentColor" />
             </svg>
           </span>
@@ -38,9 +57,11 @@
 
         <ul class="songList" v-for="song in playlist.songs" :key="song.id">
           <playlist-item
-            :click="() => setCurrentSong(song, playlist.image, song.artist ? song.artist : playlist.artist)"
+            :click="() => playlistItemClicked(song, playlist.image)"
             :song="song"
             :artist="song.artist ? song.artist : playlist.artist"
+            :isActive="song.id === currentSong.id"
+            :isPlaying="song.id === currentSong.id && isPlaying"
           />
         </ul>
       </div>
@@ -51,20 +72,27 @@
 <script>
 import PlaylistItem from "../components/PlaylistItem.vue";
 import { getSinglePlaylist } from "../api/playlists";
+import * as Vibrant from "node-vibrant";
+import { mapState } from "vuex";
+
 export default {
   components: {
     PlaylistItem
   },
   data() {
     return {
-      playlist: {}
+      playlist: {},
+      color: "#000"
     };
   },
   async beforeRouteEnter(to, from, next) {
     try {
       const data = await getSinglePlaylist(to.params.id);
+      const palette = await Vibrant.from(data.image).getPalette();
+
       next(vm => {
         vm.playlist = data;
+        vm.color = palette.Vibrant.hex;
       });
     } catch (e) {
       next(vm => {
@@ -73,7 +101,9 @@ export default {
       });
     }
   },
-  computed: {
+  computed: mapState({
+    currentSong: s => s.player.currentSong,
+    isPlaying: s => s.player.isPlaying,
     totalDuration() {
       const total = this.playlist.total_duration;
       const mins = Math.floor(total / 60);
@@ -95,19 +125,31 @@ export default {
         .map(name => name[0].toUpperCase() + name.slice(1, name.length))
         .join(" ");
     }
-  },
+  }),
   methods: {
     str_pad_left(string, pad, length) {
       return (new Array(length + 1).join(pad) + string).slice(-length);
     },
-    setCurrentSong(song, image) {
-      if (this.$store.state.player.currentSong.id === song.id) return;
+    setCurrentSong(song) {
+      if (this.currentSong.id === song.id) return;
       this.$store.dispatch("player/setCurrentSong", {
         ...song,
-        image,
-        playlistName: this.playlist.name
+        image: this.playlist.image,
+        playlistName: this.playlist.name,
+        playlistID: this.playlist.id
       });
       // console.log(this.$store.state.player.currentSong);
+    },
+    playlistItemClicked(song) {
+      if (this.currentSong.id === song.id)
+        this.$store.dispatch("player/toggleIsPlaying");
+      else this.setCurrentSong(song);
+    },
+    playSong() {
+      if (!this.playlist.songs.length) return;
+      if (this.currentSong.playlistID === this.playlist.id)
+        this.$store.dispatch("player/toggleIsPlaying");
+      else this.setCurrentSong(this.playlist.songs[0]);
     }
   }
 };

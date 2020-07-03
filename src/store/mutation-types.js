@@ -13,3 +13,4 @@ export const SAVE_PLAYLISTS = 'SAVE_PLAYLISTS';
 
 // player
 export const SET_CURRENT_SONG = 'SET_CURRENT_SONG';
+export const TOGGLE_IS_PLAYING = 'TOGGLE_IS_PLAYING';

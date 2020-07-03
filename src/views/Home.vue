@@ -1,5 +1,5 @@
 <template>
-  <div class="mainInner" ref="mainInnerRef">
+  <div class="mainInner" ref="mainInnerRef" v-if="playlists">
     <div
       v-infinite-scroll="loadMore"
       infinite-scroll-disabled="loading"
@@ -51,6 +51,7 @@ export default {
   },
   methods: {
     handleWindowResize() {
+      if (!this.$refs["mainInnerRef"]) return;
       const calculation = Math.floor(
         this.$refs["mainInnerRef"].getBoundingClientRect().width / 195
       );

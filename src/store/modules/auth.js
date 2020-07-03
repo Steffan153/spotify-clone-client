@@ -24,7 +24,6 @@ export const mutations = {
   },
   [types.SAVE_USER](state, user) {
     state.user = user;
-    console.log(state.user);
   },
   [types.LOGIN_USER](state, {
     user,
