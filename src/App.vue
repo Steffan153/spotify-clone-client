@@ -57,6 +57,19 @@ export default {
   box-sizing: border-box;
 }
 
+.toast-text {
+  padding: 7px 20px !important;
+  padding-right: 30px !important;
+}
+
+.notices .toast {
+  min-height: 3.3em !important;
+}
+
+.notices .toast-success {
+  background: $greenMain !important;
+}
+
 @font-face {
   font-family: circular-book;
   src: url(./fonts/CircularStd-Book.otf);
@@ -152,42 +165,6 @@ body {
   .subText {
     margin-top: 0.5rem;
     margin-bottom: 1.2rem;
-  }
-  .card {
-    background: $greyLighter;
-    border-radius: 8px;
-    overflow: hidden;
-    padding: 1.2rem;
-    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-    position: relative;
-    &:hover {
-      .playIcon {
-        opacity: 1;
-      }
-    }
-    .cardImage {
-      height: 160px;
-      box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.3),
-        0 1px 2px 0 rgba(0, 0, 0, 0.2);
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-    .cardContent {
-      padding: 0.4rem 0;
-      h3 {
-        font-weight: 600;
-        font-size: 0.9rem;
-        margin-bottom: 0;
-        letter-spacing: 0.6px;
-      }
-      span {
-        font-size: 0.8rem;
-        color: $greyText;
-      }
-    }
   }
 }
 

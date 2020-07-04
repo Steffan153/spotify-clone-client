@@ -10,6 +10,8 @@ import {
   getAllPlaylists
 } from './api/playlists';
 import infiniteScroll from 'vue-infinite-scroll'
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 
 Vue.config.productionTip = false;
 axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
@@ -45,6 +47,9 @@ Vue.use(VueProgressBar, {
   location: 'top',
 });
 Vue.use(infiniteScroll);
+Vue.use(VueToast, {
+  position: 'top-right',
+});
 
 const mountApp = () => new Vue({
   router,
@@ -65,7 +70,12 @@ if (token) {
     }) => {
       store.dispatch('auth/saveUser', data);
       loadInitialData();
-    }).then(() => mountApp());
+    }).then(() => {
+      axios.get("/api/likes").then(res => {
+        store.dispatch("likes/saveAllLikes", res.data);
+        mountApp();
+      });
+    });
 } else {
   loadInitialData().then(() => mountApp());
 }

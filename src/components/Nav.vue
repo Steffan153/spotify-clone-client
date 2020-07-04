@@ -61,10 +61,11 @@ export default {
   },
   methods: {
     goBack() {
-      if (this.fromRoute) this.$router.back();
-      else {
-        if (this.$router.history.current.path !== "/") this.$router.push("/");
-      }
+      return this.$router.back();
+      // if (this.fromRoute) this.$router.back();
+      // else {
+      //   if (this.$router.history.current.path !== "/") this.$router.push("/");
+      // }
     },
     logout() {
       this.$store.dispatch("auth/logout");

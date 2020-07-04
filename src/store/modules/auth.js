@@ -51,6 +51,16 @@ export const mutations = {
     axios.defaults.headers.common['Authorization'] = null;
     state.user = null;
   },
+  [types.UPDATE_USER](state, {
+    name,
+    email
+  }) {
+    state.user = {
+      ...state.user,
+      name,
+      email
+    };
+  },
 };
 
 export const actions = {

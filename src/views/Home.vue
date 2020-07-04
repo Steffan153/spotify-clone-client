@@ -6,16 +6,17 @@
       infinite-scroll-distance="10"
     >
       <div class="cardsWrap" v-for="category in playlists.data" :key="category.id">
-        <h2>{{ category.name }}</h2>
+        <div class="nameRow">
+          <h2>{{ category.name }}</h2>
+          <router-link :to="{name: 'Category', params: {id: category.id}}">see all</router-link>
+        </div>
         <p class="subText">{{ category.description }}</p>
         <playlist-section
           v-if="category.playlists.length"
           :playlists="category.playlists"
           :limiter="limiter"
         />
-        <div class="noData" v-else>
-          <p>No playlists for this category yet !</p>
-        </div>
+        <alert v-else msg="No playlists for this category yet !" />
       </div>
     </div>
   </div>
@@ -23,6 +24,8 @@
 
 <script>
 import PlaylistSection from "../components/PlaylistSection.vue";
+import Alert from "../components/Alert.vue";
+
 import { mapState } from "vuex";
 import { getAllPlaylists } from "../api/playlists";
 
@@ -36,7 +39,8 @@ export default {
     playlists: s => s.playlists.playlists
   }),
   components: {
-    PlaylistSection
+    PlaylistSection,
+    Alert
   },
   data() {
     return {
@@ -89,12 +93,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.noData {
-  width: 100%;
-  margin: 10px 0;
-  background: red;
-  color: white;
-  border-radius: 4px;
-  padding: 12px 20px;
+.nameRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  a {
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    font-size: 14px;
+    color: $greyText;
+    &:hover {
+      color: #fff;
+      border-color: #fff;
+    }
+  }
 }
 </style>

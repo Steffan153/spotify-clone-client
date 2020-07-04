@@ -39,8 +39,11 @@ export default {
           password: this.password
         });
         this.$store.dispatch("auth/login", data);
-        this.$router.push({ name: "Home" });
-        this.$Progress.finish();
+        axios.get("/api/likes").then(res => {
+          this.$store.dispatch("likes/saveAllLikes", res.data);
+          this.$router.push({ name: "Home" });
+          this.$Progress.finish();
+        });
       } catch (err) {
         console.log(err);
         this.$Progress.fail();
