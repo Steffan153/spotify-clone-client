@@ -13,6 +13,7 @@ export const getters = {
   user: (state) => state.user,
   token: (state) => state.token,
   check: (state) => state.user !== null,
+  isAdmin: (state) => state.user !== null && state.user.is_admin,
 };
 
 export const mutations = {

@@ -3,8 +3,13 @@
     <div class="songInfo">
       <img :src="currentSong.image" alt />
       <div>
-        <p class="songName">{{ currentSong.name }}</p>
-        <p class="playlistName">{{ currentSong.playlistName }}</p>
+        <p
+          class="songName"
+        >{{ currentSong.name[0].toUpperCase() + currentSong.name.slice(1,currentSong.name.length) }}</p>
+        <router-link
+          :to="{name: 'Playlists', params:{id: currentSong.playlistID}}"
+          class="playlistName"
+        >{{ currentSong.playlistName }}</router-link>
       </div>
       <div class="like" @click="toggleLike" v-if="user">
         <svg
@@ -297,6 +302,11 @@ $activeSlider: #b3b3b3;
       color: #fff;
       text-align: left;
       color: $greyText;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      &:hover {
+        border-color: $greyText;
+      }
     }
     .like {
       svg {

@@ -1,0 +1,240 @@
+$editColor: #509bf5;
+$deleteColor: red;
+$tableHeadColor: $greenMain;
+$tableColor1: $greyDark;
+$tableColor2: $greyLight;
+
+form {
+  width: 100%;
+  margin-top: 40px;
+  .group {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+    .imagePreview {
+      width: 300px;
+      height: 300px;
+      position: relative;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+      .overlay {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        svg {
+          width: 40px;
+          height: 40px;
+          fill: red;
+        }
+      }
+      &:hover {
+        .overlay {
+          opacity: 1;
+        }
+      }
+    }
+    label {
+      margin-bottom: 7px;
+      color: $greyText;
+      &:hover {
+        color: #fff;
+      }
+
+      &.imageLabel {
+        width: 300px;
+        height: 300px;
+        border-radius: 4px;
+        border: 3px dashed $greyText;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        svg {
+          width: 60px;
+          height: 60px;
+          fill: $greyText;
+        }
+        &:hover {
+          border-color: #fff;
+          svg {
+            fill: #fff;
+          }
+        }
+      }
+    }
+    input,
+    select {
+      background: $greyDark;
+      padding: 12px 20px;
+      outline: none;
+      font-size: 16px;
+      border-radius: 4px;
+      border: none;
+      color: #fff;
+      font-family: inherit;
+      &.imageInput {
+        display: none;
+      }
+    }
+
+    select {
+      option {
+        appearance: none;
+        padding: 12px 20px !important;
+        border: none !important;
+        outline: none !important;
+      }
+    }
+  }
+
+  button {
+    color: #fff;
+    background: $greenMain;
+    padding: 7px 30px;
+    border: none;
+    font-family: inherit;
+    font-size: 16px;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    &:hover,
+    &:focus {
+      background: darken($color: $greenMain, $amount: 7);
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+  }
+}
+
+.nameRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+  a {
+    background: $greenMain;
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    transition: 0.2s ease;
+    &:hover {
+      background: darken($color: $greenMain, $amount: 7);
+    }
+  }
+}
+
+.tableWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 40px;
+  border-radius: 4px;
+  overflow: hidden;
+  overflow-x: auto;
+  table {
+    min-width: 600px;
+    border-collapse: collapse;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: inherit;
+    thead {
+      display: flex;
+      width: 100%;
+      background-color: $tableHeadColor;
+    }
+
+    td,
+    th {
+      padding: 17px 8px;
+      flex: 1;
+      text-align: center !important;
+    }
+
+    tr {
+      background: $tableColor2;
+      display: flex;
+    }
+
+    tr:not(:nth-child(even)) {
+      background-color: $tableColor1;
+    }
+
+    tr:hover {
+      background-color: $tableColor1;
+    }
+
+    th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      color: white;
+    }
+
+    td {
+      a {
+        color: $greyText;
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+        &:hover {
+          border-color: #fff;
+          color: #fff;
+        }
+      }
+      img {
+        width: 60px;
+        height: 60px;
+      }
+
+      .edit,
+      .delete {
+        display: inline-block;
+        text-decoration: none;
+        color: #fff;
+        margin: 0 8px;
+        padding: 6px 15px;
+        border-radius: 3px;
+        transition: background 0.2s ease;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 15px;
+
+        svg {
+          width: 15px;
+          height: 15px;
+          fill: #fff;
+        }
+      }
+      .edit {
+        background: $editColor;
+        color: #fff;
+        &:hover {
+          background: darken($color: $editColor, $amount: 7);
+        }
+      }
+      .delete {
+        background: $deleteColor;
+        &:hover {
+          background: darken($color: $deleteColor, $amount: 7);
+        }
+      }
+    }
+  }
+}

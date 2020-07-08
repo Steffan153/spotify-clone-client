@@ -44,6 +44,20 @@
           Your Library
         </router-link>
       </li>
+
+      <div v-if="user && user.is_admin">
+        <li>
+          <router-link :to="{name: 'Categories.index'}" active-class="active">Categories</router-link>
+        </li>
+
+        <li>
+          <router-link :to="{name: 'Playlists.index'}" active-class="active">Playlists</router-link>
+        </li>
+
+        <li>
+          <router-link :to="{name: 'Songs.index'}" active-class="active">Songs</router-link>
+        </li>
+      </div>
     </ul>
     <div class="cookies">
       <span>Cookies</span>

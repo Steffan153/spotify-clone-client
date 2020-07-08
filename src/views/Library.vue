@@ -49,16 +49,8 @@ export default {
     };
   },
   computed: mapState({
-    user: s => s.auth.user,
     playlists: s => s.likes.likes.playlists
-  }),
-  watch: {
-    user() {
-      if (!this.$store.state.auth.user) {
-        this.$router.push({ name: "Home" });
-      }
-    }
-  }
+  })
 };
 </script>
 

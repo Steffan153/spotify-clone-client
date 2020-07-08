@@ -68,13 +68,10 @@ export default {
     this.name = this.user.name;
     this.email = this.user.email;
   },
-  computed: mapState({
-    user: s => s.auth.user
-  }),
-  watch: {
-    user() {
-      if (!this.user) this.$router.push({ name: "Home" });
-    }
+  computed: {
+    ...mapState({
+      user: s => s.auth.user
+    })
   },
   methods: {
     async updateData() {

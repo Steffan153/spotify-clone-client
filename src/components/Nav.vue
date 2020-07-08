@@ -69,6 +69,13 @@ export default {
     },
     logout() {
       this.$store.dispatch("auth/logout");
+      console.log(this.$router.history.current);
+      if (
+        this.$router.history.current.path.startsWith("/dashboard") ||
+        this.$router.history.current.path.startsWith("/library") ||
+        this.$router.history.current.path === "/profile"
+      )
+        this.$router.push({ name: "Home" });
     },
     togglePopup() {
       this.isOpen = !this.isOpen;
