@@ -8,7 +8,7 @@
         <input type="password" placeholder="Password" v-model="password" required />
         <button type="submit">Register</button>
       </form>
-      <router-link :to="{name: 'Login'}">Alread have an account ?</router-link>
+      <router-link :to="{name: 'Login'}">Already have an account ?</router-link>
     </div>
   </div>
 </template>
@@ -92,5 +92,9 @@ h1 {
   border-radius: 20px;
   color: #fff;
   font-family: inherit;
+}
+
+a {
+  color: #fff;
 }
 </style>

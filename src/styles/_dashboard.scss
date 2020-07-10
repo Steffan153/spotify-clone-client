@@ -50,7 +50,8 @@ form {
         color: #fff;
       }
 
-      &.imageLabel {
+      &.imageLabel,
+      &.songLabel {
         width: 300px;
         height: 300px;
         border-radius: 4px;
@@ -71,6 +72,9 @@ form {
           }
         }
       }
+      &.songLabel {
+        height: 100px;
+      }
     }
     input,
     select {
@@ -82,7 +86,8 @@ form {
       border: none;
       color: #fff;
       font-family: inherit;
-      &.imageInput {
+      &.imageInput,
+      &.songInput {
         display: none;
       }
     }

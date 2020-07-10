@@ -8,14 +8,12 @@ const formatDuration = (seconds, withHours = false) => {
   const secs = total - mins * 60;
   const hrs = Math.floor(total / 3600);
   return `
-    ${withHours && str_pad_left(hrs, "0", 2) + ':'}${str_pad_left(
+    ${withHours ? str_pad_left(hrs, '0', 2) + ':' : ''}${str_pad_left(
     mins,
-    "0",
-    2
-  )}:${str_pad_left(secs, "0", 2)}
+    '0',
+    2,
+  )}:${str_pad_left(secs, '0', 2)}
   `;
 };
 
-export {
-  formatDuration
-};
+export { formatDuration };
